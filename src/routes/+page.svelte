@@ -177,7 +177,7 @@
 	</div>
 	<Dialog.Root>
 		<Dialog.Trigger class="absolute bottom-4 right-4"><Book class="h-6 w-6" /></Dialog.Trigger>
-		<Dialog.Content class=" rounded-xl sm:max-w-[425px]">
+		<Dialog.Content class="w-11/12 rounded-xl sm:max-w-[425px]">
 			<Dialog.Header>
 				<Dialog.Title>Reglas del Juego</Dialog.Title>
 				<Dialog.Description class="flex flex-col justify-start text-left">
@@ -198,7 +198,7 @@
 
 	<Dialog.Root>
 		<Dialog.Trigger class="absolute bottom-4 left-4"><Info class="h-6 w-6" /></Dialog.Trigger>
-		<Dialog.Content class="rounded-xl p-6 sm:max-w-[425px]">
+		<Dialog.Content class="w-11/12 rounded-xl sm:max-w-[425px]">
 			<Dialog.Header>
 				<Dialog.Title>Grupo H - Juegos y Complejidad</Dialog.Title>
 				<Dialog.Description class="text-left">
