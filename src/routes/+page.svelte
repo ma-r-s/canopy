@@ -1,6 +1,20 @@
 <script>
 	import { Confetti } from 'svelte-confetti';
 	import { Button } from '$lib/components/ui/button';
+	import { onMount } from 'svelte';
+	function preventDoubleClick(event) {
+		event.preventDefault();
+	}
+
+	// Attach the event listener to prevent double-click default action
+	function disableDoubleClick() {
+		document.addEventListener('dblclick', preventDoubleClick, { passive: false });
+	}
+
+	// Ensure the script runs after the component is mounted
+	onMount(() => {
+		disableDoubleClick();
+	});
 
 	// State variables
 	let currentQuestionIndex = 0;
