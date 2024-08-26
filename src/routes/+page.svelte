@@ -233,12 +233,14 @@
 			<div class=" text-center">
 				<p class="mb-4 text-3xl">{finalMessage}</p>
 				{#if prizeMessage == 'peq'}
-					<p class="mb-4 bg-yellow-300 p-4 font-bold text-black">🎉 Este numero tiene premio! 🎉</p>
+					<p class="mb-4 rounded-lg bg-yellow-300 p-4 font-bold text-black">
+						🎉 Este numero tiene premio! 🎉
+					</p>
 				{:else if prizeMessage == 'gran'}
 					<div class="flex">
 						<Confetti infinite x={[-1, 1]} />
 
-						<p class="mb-4 bg-yellow-300 p-1 text-3xl font-bold text-black">
+						<p class="mb-4 rounded-lg bg-yellow-300 p-1 text-3xl font-bold text-black">
 							🎉 Encontraste el Gran Premio! 🎉
 						</p>
 						<Confetti infinite x={[-1, 1]} />
