@@ -1,0 +1,170 @@
+<script>
+	import { Button } from '$lib/components/ui/button';
+
+	// State variables
+	let currentQuestionIndex = 0;
+	let currentPath = '';
+	let branches = []; // Store branches with start and end points
+	let finalMessage = ''; // Message to display at the end of the game
+	let prizeMessage = ''; // Message for winning a prize
+
+	const questions = [
+		{ question: 'Cual empanada es mejor?', leftAnswer: 'Saudade', rightAnswer: 'Típicas' },
+		{ question: 'Tener clase en ...', leftAnswer: 'El SD', rightAnswer: 'El O' },
+		{
+			question: 'Hacer trabajos en...',
+			leftAnswer: 'Biblioteca del ML',
+			rightAnswer: 'Biblioteca del SD'
+		},
+		{ question: 'Para tu clase vas por:', leftAnswer: 'Ascensor', rightAnswer: 'Escaleras' },
+		{ question: 'En el salón te haces:', leftAnswer: 'Adelante', rightAnswer: 'Atrás' },
+		{ question: 'Llegas a la U en:', leftAnswer: 'Wheels', rightAnswer: 'Transmi' },
+		{
+			question: 'Estudias para el parcial:',
+			leftAnswer: 'Una semana antes',
+			rightAnswer: 'El día antes'
+		},
+		{ question: 'Tu almuerzo:', leftAnswer: 'Lo traes', rightAnswer: 'Lo compras' },
+		{ question: 'Vas a clase:', leftAnswer: 'En la mañana', rightAnswer: 'En la tarde' }
+	];
+
+	let branchAngleDegrees = 20; // Default branch angle in degrees
+	let branchAngle = branchAngleDegrees * (Math.PI / 180); // Angle in radians
+
+	// List of prime numbers between 0 and 255
+	const primeNumbers = [
+		2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97,
+		101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193,
+		197, 199, 211, 223, 227, 229, 233, 239, 241, 251
+	];
+
+	// Function to draw a branch
+	function drawBranch(x1, y1, angle, length, depth, path) {
+		const x2 = x1 + length * Math.cos(angle);
+		const y2 = y1 + length * Math.sin(angle);
+
+		branches.push({ x1, y1, x2, y2, depth, path });
+		return { x2, y2 };
+	}
+
+	// Function to generate the tree based on the current path and angle
+	function generateTree() {
+		// Initial branch setup
+		let x1 = 0,
+			y1 = 40;
+		let length = 20;
+		let angle = -Math.PI / 2; // Start with an angle pointing up (-90 degrees)
+		let depth = 1;
+
+		let path = ''; // Start with an empty path
+		let newCoords = drawBranch(x1, y1, angle, length, depth, path);
+
+		for (const direction of currentPath) {
+			length *= 0.8;
+			depth += 1;
+			angle += direction === 'L' ? -branchAngle : branchAngle;
+			newCoords = drawBranch(newCoords.x2, newCoords.y2, angle, length, depth, path + direction);
+			path += direction;
+		}
+	}
+
+	// Function to calculate the binary number from the current path
+	function calculateBinaryPath(path) {
+		let binary = 0;
+		for (let i = 0; i < path.length; i++) {
+			if (path[i] === 'R') {
+				binary += 1 << (path.length - 1 - i);
+			}
+		}
+		return binary;
+	}
+
+	// Handle question answering and drawing branches
+	function nextQuestion(choice) {
+		const newPath = currentPath + choice;
+		currentPath = newPath;
+		generateTree(); // Redraw the tree after each choice
+
+		if (currentQuestionIndex < questions.length - 1) {
+			currentQuestionIndex++;
+		} else {
+			// End of questions
+			const binaryValue = calculateBinaryPath(currentPath);
+			finalMessage = `Camino: ${binaryValue}`;
+			if (binaryValue === 42) {
+				prizeMessage = '🎉 ¡Felicidades! Has ganado el Gran Premio 🎉';
+			} else if (primeNumbers.includes(binaryValue)) {
+				prizeMessage = '🎉 ¡Felicidades! Has ganado un premio 🎉';
+			} else {
+				prizeMessage = ''; // No prize if not a prime number or 42
+			}
+			currentQuestionIndex = -1;
+		}
+	}
+
+	// Function to reset the game
+	function resetGame() {
+		currentQuestionIndex = 0;
+		currentPath = '';
+		finalMessage = ''; // Reset final message
+		prizeMessage = ''; // Reset prize message
+		generateTree();
+	}
+
+	// Generate the initial tree
+	generateTree();
+</script>
+
+<!-- Main container -->
+<div
+	class="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-purple-800 to-pink-600 p-6"
+>
+	<!-- Game Title -->
+	<h1 class="mb-8 text-4xl font-bold text-white">Búsqueda Fractal</h1>
+
+	<!-- SVG to render the tree -->
+	<div class="relative w-full max-w-screen-md grow overflow-hidden">
+		<svg viewBox="-50 -50 100 100" class="absolute inset-0 h-full w-full">
+			{#each branches as { x1, y1, x2, y2, depth, path }}
+				<line
+					{x1}
+					{y1}
+					{x2}
+					{y2}
+					stroke={path === currentPath ? 'black' : 'white'}
+					stroke-linecap="round"
+					stroke-width={2 / depth}
+				/>
+			{/each}
+		</svg>
+	</div>
+
+	<!-- Display questions and buttons -->
+	{#if currentQuestionIndex >= 0}
+		<div class="mt-6 text-center">
+			<p class="mb-4 text-xl font-semibold text-white">
+				{questions[currentQuestionIndex].question}
+			</p>
+			<div class="flex justify-center gap-4">
+				<Button on:click={() => nextQuestion('L')} class="bg-blue-500 text-white hover:bg-blue-600">
+					{questions[currentQuestionIndex].leftAnswer}
+				</Button>
+				<Button on:click={() => nextQuestion('R')} class="bg-teal-700 text-white hover:bg-teal-800">
+					{questions[currentQuestionIndex].rightAnswer}
+				</Button>
+			</div>
+		</div>
+	{:else}
+		<div class="mt-6 text-center">
+			<p class="mb-4 text-xl text-white">{finalMessage}</p>
+			{#if prizeMessage}
+				<p class="mb-4 text-lg font-bold text-yellow-400">{prizeMessage}</p>
+			{:else}
+				<p>Aqui no hay nada</p>
+			{/if}
+			<Button on:click={resetGame} class="bg-pink-600 text-white hover:bg-pink-700">
+				Empezar de nuevo
+			</Button>
+		</div>
+	{/if}
+</div>
