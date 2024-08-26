@@ -131,7 +131,10 @@
 </script>
 
 <!-- Main container -->
-<div class="h-dvh flex-col items-center justify-center p-6 font-mono" style={gradientStyle}>
+<div
+	class="h-dvh select-none flex-col items-center justify-center p-6 font-mono"
+	style={gradientStyle}
+>
 	<!-- Game Title -->
 	<h1 class="font-custom mb-8 text-4xl text-white">Búsqueda Fractal</h1>
 
