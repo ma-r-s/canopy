@@ -45,7 +45,7 @@
 		},
 		{ question: 'Tu almuerzo:', leftAnswer: 'Lo traes', rightAnswer: 'Lo compras' },
 		{ question: 'Vas a clase:', leftAnswer: 'En la mañana', rightAnswer: 'En la tarde' },
-		{ question: 'P10', leftAnswer: 'L10', rightAnswer: 'R10' }
+		{ question: 'Esta clase la vas a:', leftAnswer: 'Pasar', rightAnswer: 'Perder' }
 	];
 
 	// Generate random angles for left and right branches
