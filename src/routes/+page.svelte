@@ -192,7 +192,7 @@
 				</div>
 			</div>
 		{:else}
-			<div class="mt-6 text-center">
+			<div class=" text-center">
 				<p class="mb-4 text-3xl">{finalMessage}</p>
 				{#if prizeMessage == 'peq'}
 					<p class="mb-4 bg-yellow-300 p-4 font-bold text-black">🎉 Este numero tiene premio! 🎉</p>
