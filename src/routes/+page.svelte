@@ -192,7 +192,7 @@
 						<Confetti infinite x={[-1, 1]} />
 					</div>
 				{:else}
-					<p class="mb-4">Aqui no hay nada</p>
+					<p class="mb-4">Aquí no hay nada</p>
 				{/if}
 				<Button on:click={resetGame} class="">Empezar de nuevo</Button>
 			</div>
