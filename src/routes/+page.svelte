@@ -199,3 +199,10 @@
 		{/if}
 	</div>
 </div>
+
+<style>
+	/* Apply touch-action: manipulation to the body or specific elements */
+	div {
+		touch-action: manipulation;
+	}
+</style>
