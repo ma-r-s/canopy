@@ -2,6 +2,7 @@
 	import { Confetti } from 'svelte-confetti';
 	import { Button } from '$lib/components/ui/button';
 	import { onMount } from 'svelte';
+
 	function preventDoubleClick(event) {
 		event.preventDefault();
 	}
@@ -43,14 +44,19 @@
 		{ question: 'Vas a clase:', leftAnswer: 'En la mañana', rightAnswer: 'En la tarde' }
 	];
 
-	let branchAngleDegrees = 20; // Default branch angle in degrees
-	let branchAngle = branchAngleDegrees * (Math.PI / 180); // Angle in radians
+	// Generate random angles for left and right branches
+	let leftAngleDegrees = Math.floor(Math.random() * 30) + 10; // Between 10 and 55 degrees
+	let rightAngleDegrees = Math.floor(Math.random() * 30) + 5; // Between 10 and 55 degrees
+	let leftAngle = leftAngleDegrees * (Math.PI / 180); // Convert to radians
+	let rightAngle = rightAngleDegrees * (Math.PI / 180); // Convert to radians
 
 	// List of prime numbers between 0 and 255
 	const primeNumbers = [
 		2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97,
 		101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193,
-		197, 199, 211, 223, 227, 229, 233, 239, 241, 251
+		197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307,
+		311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421,
+		431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509
 	];
 
 	// Function to generate a random color in hex format
@@ -87,7 +93,7 @@
 		for (const direction of currentPath) {
 			length *= 0.8;
 			depth += 1;
-			angle += direction === 'L' ? -branchAngle : branchAngle;
+			angle += direction === 'L' ? -leftAngle : rightAngle;
 			newCoords = drawBranch(newCoords.x2, newCoords.y2, angle, length, depth, path + direction);
 			path += direction;
 		}
@@ -168,7 +174,6 @@
 			{/each}
 		</svg>
 	</div>
-
 	<!-- Display questions and buttons -->
 	<div class="h-44">
 		{#if currentQuestionIndex >= 0}
