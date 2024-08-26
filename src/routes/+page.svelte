@@ -193,15 +193,12 @@
 					<strong>Reinicio:</strong> Intenta jugar muchas veces y ver si se forma un patron en el arbol.
 				</Dialog.Description>
 			</Dialog.Header>
-			<Dialog.Footer>
-				<Button type="button">Cerrar</Button>
-			</Dialog.Footer>
 		</Dialog.Content>
 	</Dialog.Root>
 
 	<Dialog.Root>
 		<Dialog.Trigger class="absolute bottom-4 left-4"><Info class="h-6 w-6" /></Dialog.Trigger>
-		<Dialog.Content class="rounded-xl sm:max-w-[425px]">
+		<Dialog.Content class="rounded-xl p-6 sm:max-w-[425px]">
 			<Dialog.Header>
 				<Dialog.Title>Grupo H - Juegos y Complejidad</Dialog.Title>
 				<Dialog.Description class="text-left">
@@ -213,9 +210,6 @@
 					<p class="mt-4"><strong>Universidad de los Andes 2024</strong></p>
 				</Dialog.Description>
 			</Dialog.Header>
-			<Dialog.Footer>
-				<Button type="button">Cerrar</Button>
-			</Dialog.Footer>
 		</Dialog.Content>
 	</Dialog.Root>
 
