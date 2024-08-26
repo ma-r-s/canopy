@@ -117,10 +117,10 @@
 
 <!-- Main container -->
 <div
-	class="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-purple-800 to-pink-600 p-6"
+	class="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-purple-800 to-pink-600 p-6 font-mono"
 >
 	<!-- Game Title -->
-	<h1 class="mb-8 text-4xl font-bold text-white">Búsqueda Fractal</h1>
+	<h1 class="font-custom mb-8 text-4xl text-white">Búsqueda Fractal</h1>
 
 	<!-- SVG to render the tree -->
 	<div class="relative w-full max-w-screen-md grow overflow-hidden">
@@ -140,31 +140,37 @@
 	</div>
 
 	<!-- Display questions and buttons -->
-	{#if currentQuestionIndex >= 0}
-		<div class="mt-6 text-center">
-			<p class="mb-4 text-xl font-semibold text-white">
-				{questions[currentQuestionIndex].question}
-			</p>
-			<div class="flex justify-center gap-4">
-				<Button on:click={() => nextQuestion('L')} class="bg-blue-500 text-white hover:bg-blue-600">
-					{questions[currentQuestionIndex].leftAnswer}
-				</Button>
-				<Button on:click={() => nextQuestion('R')} class="bg-teal-700 text-white hover:bg-teal-800">
-					{questions[currentQuestionIndex].rightAnswer}
-				</Button>
+	<div class="h-44">
+		{#if currentQuestionIndex >= 0}
+			<div class="mt-6 text-center text-2xl">
+				<p class="mb-4 font-semibold text-white">
+					{questions[currentQuestionIndex].question}
+				</p>
+				<div class="flex justify-center gap-4">
+					<Button
+						on:click={() => nextQuestion('L')}
+						class="bg-emerald-500 text-white hover:bg-emerald-600"
+					>
+						{questions[currentQuestionIndex].leftAnswer}
+					</Button>
+					<Button
+						on:click={() => nextQuestion('R')}
+						class="bg-amber-500 text-white hover:bg-amber-600"
+					>
+						{questions[currentQuestionIndex].rightAnswer}
+					</Button>
+				</div>
 			</div>
-		</div>
-	{:else}
-		<div class="mt-6 text-center">
-			<p class="mb-4 text-xl text-white">{finalMessage}</p>
-			{#if prizeMessage}
-				<p class="mb-4 text-lg font-bold text-yellow-400">{prizeMessage}</p>
-			{:else}
-				<p>Aqui no hay nada</p>
-			{/if}
-			<Button on:click={resetGame} class="bg-pink-600 text-white hover:bg-pink-700">
-				Empezar de nuevo
-			</Button>
-		</div>
-	{/if}
+		{:else}
+			<div class="mt-6 text-center">
+				<p class="mb-4 text-3xl">{finalMessage}</p>
+				{#if prizeMessage}
+					<p class="mb-4 bg-yellow-300 p-4 font-bold text-black">{prizeMessage}</p>
+				{:else}
+					<p class="mb-4">Aqui no hay nada</p>
+				{/if}
+				<Button on:click={resetGame} class="">Empezar de nuevo</Button>
+			</div>
+		{/if}
+	</div>
 </div>
