@@ -44,7 +44,8 @@
 			rightAnswer: 'El día antes'
 		},
 		{ question: 'Tu almuerzo:', leftAnswer: 'Lo traes', rightAnswer: 'Lo compras' },
-		{ question: 'Vas a clase:', leftAnswer: 'En la mañana', rightAnswer: 'En la tarde' }
+		{ question: 'Vas a clase:', leftAnswer: 'En la mañana', rightAnswer: 'En la tarde' },
+		{ question: 'P10', leftAnswer: 'L10', rightAnswer: 'R10' }
 	];
 
 	// Generate random angles for left and right branches
@@ -55,9 +56,9 @@
 
 	// List of prime numbers between 0 and 255
 	const numbers = [
-		10, 27, 28, 51, 53, 74, 74, 88, 95, 139, 141, 143, 152, 153, 158, 172, 174, 177, 187, 200, 201,
-		212, 214, 248, 254, 258, 278, 280, 289, 296, 307, 343, 345, 347, 359, 363, 377, 384, 421, 427,
-		451, 468, 474, 483, 488, 499, 504, 506, 509, 512
+		893, 561, 441, 199, 401, 989, 869, 944, 572, 962, 596, 181, 98, 808, 540, 34, 409, 18, 670, 459,
+		843, 849, 302, 803, 216, 405, 221, 164, 895, 913, 264, 953, 604, 162, 796, 908, 203, 317, 554,
+		879, 111, 742, 516, 382, 122, 643, 586, 854, 452, 1006
 	];
 
 	// Function to generate a random color in hex format
