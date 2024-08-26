@@ -172,7 +172,7 @@
 	<!-- Display questions and buttons -->
 	<div class="h-44">
 		{#if currentQuestionIndex >= 0}
-			<div class="mt-6 text-center text-2xl">
+			<div class=" text-center text-2xl">
 				<p class="mb-4 font-semibold text-white">
 					{questions[currentQuestionIndex].question}
 				</p>
