@@ -1,4 +1,5 @@
 <script>
+	import { Confetti } from 'svelte-confetti';
 	import { Button } from '$lib/components/ui/button';
 
 	// State variables
@@ -37,6 +38,16 @@
 		101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193,
 		197, 199, 211, 223, 227, 229, 233, 239, 241, 251
 	];
+
+	// Function to generate a random color in hex format
+	function getRandomColor() {
+		const letters = '0123456789ABCDEF';
+		let color = '#';
+		for (let i = 0; i < 6; i++) {
+			color += letters[Math.floor(Math.random() * 16)];
+		}
+		return color;
+	}
 
 	// Function to draw a branch
 	function drawBranch(x1, y1, angle, length, depth, path) {
@@ -92,9 +103,9 @@
 			const binaryValue = calculateBinaryPath(currentPath);
 			finalMessage = `Camino: ${binaryValue}`;
 			if (binaryValue === 42) {
-				prizeMessage = '🎉 ¡Felicidades! Has ganado el Gran Premio 🎉';
+				prizeMessage = 'gran';
 			} else if (primeNumbers.includes(binaryValue)) {
-				prizeMessage = '🎉 ¡Felicidades! Has ganado un premio 🎉';
+				prizeMessage = 'peq';
 			} else {
 				prizeMessage = ''; // No prize if not a prime number or 42
 			}
@@ -111,13 +122,18 @@
 		generateTree();
 	}
 
-	// Generate the initial tree
+	// Generate the initial tree and random gradient
+	let gradientStart = getRandomColor();
+	let gradientEnd = getRandomColor();
+	let gradientStyle = `background: linear-gradient(to bottom, ${gradientStart}, ${gradientEnd});`;
+
 	generateTree();
 </script>
 
 <!-- Main container -->
 <div
-	class="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-purple-800 to-pink-600 p-6 font-mono"
+	class="flex min-h-screen flex-col items-center justify-center p-6 font-mono"
+	style={gradientStyle}
 >
 	<!-- Game Title -->
 	<h1 class="font-custom mb-8 text-4xl text-white">Búsqueda Fractal</h1>
@@ -164,8 +180,17 @@
 		{:else}
 			<div class="mt-6 text-center">
 				<p class="mb-4 text-3xl">{finalMessage}</p>
-				{#if prizeMessage}
-					<p class="mb-4 bg-yellow-300 p-4 font-bold text-black">{prizeMessage}</p>
+				{#if prizeMessage == 'peq'}
+					<p class="mb-4 bg-yellow-300 p-4 font-bold text-black">🎉 Este numero tiene premio! 🎉</p>
+				{:else if prizeMessage == 'gran'}
+					<div class="flex">
+						<Confetti infinite x={[-1, 1]} />
+
+						<p class="mb-4 bg-yellow-300 p-1 text-3xl font-bold text-black">
+							🎉 Encontraste el Gran Premio! 🎉
+						</p>
+						<Confetti infinite x={[-1, 1]} />
+					</div>
 				{:else}
 					<p class="mb-4">Aqui no hay nada</p>
 				{/if}
