@@ -132,7 +132,7 @@
 
 <!-- Main container -->
 <div
-	class="flex h-dvh touch-manipulation select-none flex-col items-center justify-center p-6 font-mono"
+	class="flex h-dvh touch-pan-x select-none flex-col items-center justify-center p-6 font-mono"
 	style={gradientStyle}
 >
 	<!-- Game Title -->
