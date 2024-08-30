@@ -56,9 +56,9 @@
 
 	// List of prime numbers between 0 and 255
 	const numbers = [
-		893, 561, 441, 199, 401, 989, 869, 944, 572, 962, 596, 181, 98, 808, 540, 34, 409, 18, 670, 459,
-		843, 849, 302, 803, 216, 405, 221, 164, 895, 913, 264, 953, 604, 162, 796, 908, 203, 317, 554,
-		879, 111, 742, 516, 382, 122, 643, 586, 854, 452, 1006
+		28, 31, 36, 123, 130, 166, 210, 230, 262, 270, 316, 319, 333, 346, 356, 379, 405, 444, 451, 459,
+		485, 491, 554, 580, 592, 593, 617, 626, 646, 656, 662, 679, 710, 730, 741, 803, 853, 879, 883,
+		889, 903, 930, 936, 942, 950, 964, 978, 980, 1004, 1021
 	];
 
 	// Function to generate a random color in hex format
@@ -158,7 +158,7 @@
 	style={gradientStyle}
 >
 	<!-- Game Title -->
-	<h1 class="font-custom mb-8 text-4xl">Búsqueda Fractal</h1>
+	<h1 class="mb-8 font-custom text-4xl">Búsqueda Fractal</h1>
 
 	<!-- SVG to render the tree -->
 	<div class="relative w-full max-w-screen-md grow overflow-hidden">
