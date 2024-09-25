@@ -68,7 +68,6 @@
 		}
 
 		// Redraw the tree after each choice
-		generateTree();
 
 		// Narrow down the value and ask the next question
 		currentValue = Math.floor((maxValue + minValue) / 2);
@@ -79,6 +78,7 @@
 		} else {
 			askNextQuestion();
 		}
+		generateTree();
 	}
 
 	// Reset the game
@@ -92,6 +92,7 @@
 		generateTree();
 		askNextQuestion();
 	}
+	generateTree();
 </script>
 
 <!-- Main Container -->
