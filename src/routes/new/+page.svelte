@@ -21,8 +21,8 @@
 	];
 
 	// Random angles for left and right branches
-	let leftAngleDegrees = Math.floor(Math.random() * 30) + 10;
-	let rightAngleDegrees = Math.floor(Math.random() * 30) + 5;
+	let leftAngleDegrees = 30;
+	let rightAngleDegrees = 30;
 	let leftAngle = leftAngleDegrees * (Math.PI / 180);
 	let rightAngle = rightAngleDegrees * (Math.PI / 180);
 
@@ -121,6 +121,7 @@
 		generateTree();
 		askNextQuestion();
 	}
+	generateTree();
 </script>
 
 <!-- Main Container -->
