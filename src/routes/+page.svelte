@@ -128,7 +128,7 @@
 <div
 	class="flex h-screen flex-col items-center justify-center bg-gradient-to-b from-indigo-500 to-purple-700 p-6 font-mono text-white"
 >
-	<h1 class="mb-8 text-4xl font-bold">Juego de Decisiones Binarias</h1>
+	<h1 class="mb-8 text-4xl font-bold">Fractalizados!</h1>
 
 	<!-- Mostrar la visualización del árbol -->
 	<div class="relative mb-8 w-full max-w-screen-md grow overflow-hidden">
