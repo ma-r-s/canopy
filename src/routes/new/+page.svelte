@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 
 	// Initialize the game variables
+	let currentQuestionIndex = 0; // Tracks the current question
 	let currentQuestion = '';
 	let currentValue = 50000000; // Start value
 	let minValue = 0;
@@ -10,6 +11,14 @@
 	let currentPath = '';
 	let branches = []; // Store the drawn branches
 	let finalMessage = '';
+	let questionResults = []; // Stores the result for each question
+
+	// Questions array
+	const questions = [
+		{ text: 'Would you be willing to lose an arm for', unit: ' pesos?' },
+		{ text: 'Would you start your career over again for', unit: ' pesos?' },
+		{ text: "Would you tattoo your ex's name on your forehead for", unit: ' pesos?' }
+	];
 
 	// Random angles for left and right branches
 	let leftAngleDegrees = Math.floor(Math.random() * 30) + 10;
@@ -27,7 +36,7 @@
 	function drawBranch(x1, y1, angle, length, depth, path) {
 		const x2 = x1 + length * Math.cos(angle);
 		const y2 = y1 + length * Math.sin(angle);
-		branches.push({ x1, y1, x2, y2, depth, path });
+		branches.push({ x1, y1, x2, y2, depth, path, questionIndex: currentQuestionIndex });
 		return { x2, y2 };
 	}
 
@@ -52,7 +61,10 @@
 
 	// Ask the next question based on the current range of values
 	function askNextQuestion() {
-		currentQuestion = `Would you be willing to lose an arm for ${currentValue.toLocaleString()} pesos?`;
+		if (currentQuestionIndex < questions.length) {
+			const question = questions[currentQuestionIndex];
+			currentQuestion = `${question.text} ${currentValue.toLocaleString()}${question.unit}`;
+		}
 	}
 
 	// Handle the binary search response
@@ -67,32 +79,48 @@
 			currentPath += 'R';
 		}
 
-		// Redraw the tree after each choice
-
 		// Narrow down the value and ask the next question
 		currentValue = Math.floor((maxValue + minValue) / 2);
 
 		// Check if the range between max and min is small enough to stop
 		if (Math.abs(maxValue - minValue) <= threshold) {
-			finalMessage = `You would lose an arm for approximately ${currentValue.toLocaleString()} pesos.`;
+			finalMessage = `You would ${questions[currentQuestionIndex].text.toLowerCase()} approximately ${currentValue.toLocaleString()}${questions[currentQuestionIndex].unit}`;
+			questionResults.push({ question: questions[currentQuestionIndex].text, value: currentValue });
 		} else {
 			askNextQuestion();
 		}
+
 		generateTree();
 	}
 
-	// Reset the game
-	function resetGame() {
-		currentPath = '';
+	// Proceed to the next question
+	function continueToNextQuestion() {
+		currentQuestionIndex++;
+		resetValues();
+		if (currentQuestionIndex < questions.length) {
+			askNextQuestion();
+			generateTree();
+		}
+	}
+
+	// Reset values for the next question
+	function resetValues() {
 		minValue = 0;
 		maxValue = 100000000;
-		currentValue = maxValue;
+		currentValue = Math.floor((maxValue + minValue) / 2);
+		currentPath = '';
 		finalMessage = '';
+	}
+
+	// Reset the entire game
+	function resetGame() {
+		currentQuestionIndex = 0;
+		questionResults = [];
+		resetValues();
 		branches = [];
 		generateTree();
 		askNextQuestion();
 	}
-	generateTree();
 </script>
 
 <!-- Main Container -->
@@ -104,13 +132,17 @@
 	<!-- Display the tree visualization -->
 	<div class="relative mb-8 w-full max-w-screen-md grow overflow-hidden">
 		<svg viewBox="-50 -50 100 100" class="absolute inset-0 h-full w-full">
-			{#each branches as { x1, y1, x2, y2, depth, path }}
+			{#each branches as { x1, y1, x2, y2, depth, path, questionIndex }}
 				<line
 					{x1}
 					{y1}
 					{x2}
 					{y2}
-					stroke={path === currentPath ? 'black' : 'white'}
+					stroke={questionIndex != currentQuestionIndex
+						? 'black'
+						: path === currentPath
+							? 'white'
+							: 'gray'}
 					stroke-linecap="round"
 					stroke-width={2 / depth}
 				/>
@@ -119,7 +151,7 @@
 	</div>
 
 	<!-- Display the current question or final message -->
-	{#if finalMessage === ''}
+	{#if finalMessage === '' && currentQuestionIndex < questions.length}
 		<div class="mb-4 text-center text-xl">
 			<p>{currentQuestion}</p>
 		</div>
@@ -139,9 +171,26 @@
 				No
 			</button>
 		</div>
-	{:else}
+	{:else if finalMessage !== '' && currentQuestionIndex < questions.length}
 		<div class="text-center text-2xl">
 			<p>{finalMessage}</p>
+			<button
+				on:click={continueToNextQuestion}
+				class="mt-4 rounded-lg bg-blue-500 px-4 py-2 hover:bg-blue-600"
+			>
+				Continue to next question
+			</button>
+		</div>
+	{:else}
+		<div class="text-center text-2xl">
+			<p class="mb-4">Game Over! Here are your results:</p>
+			<ul class="text-left">
+				{#each questionResults as { question, value }}
+					<li class="mb-2">
+						<strong>{question}</strong>: {value.toLocaleString()} pesos
+					</li>
+				{/each}
+			</ul>
 			<button on:click={resetGame} class="mt-4 rounded-lg bg-blue-500 px-4 py-2 hover:bg-blue-600">
 				Start Again
 			</button>
