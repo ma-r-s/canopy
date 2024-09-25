@@ -17,7 +17,11 @@
 	const questions = [
 		{ text: 'Estarías dispuesto a perder un brazo por', unit: ' pesos?' },
 		{ text: 'Volverías a empezar tu carrera por', unit: ' pesos?' },
-		{ text: 'Te tatuarías el nombre de tu ex en la frente por', unit: ' pesos?' }
+		{ text: 'Te tatuarías el nombre de tu ex en la frente por', unit: ' pesos?' },
+		{
+			text: 'Te irias a vivir a una isla desierta sin tecnologia ni personas por 5 años por',
+			unit: ' pesos?'
+		}
 	];
 
 	// Ángulos aleatorios para las ramas izquierda y derecha
