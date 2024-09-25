@@ -3,7 +3,7 @@
 
 	// Initialize the game variables
 	let currentQuestion = '';
-	let currentValue = 100000000; // Start value
+	let currentValue = 50000000; // Start value
 	let minValue = 0;
 	let maxValue = 100000000;
 	let threshold = 100000; // Precision threshold for binary search
@@ -72,8 +72,9 @@
 
 		// Narrow down the value and ask the next question
 		currentValue = Math.floor((maxValue + minValue) / 2);
+
+		// Check if the range between max and min is small enough to stop
 		if (Math.abs(maxValue - minValue) <= threshold) {
-			// Stop when the range is small enough
 			finalMessage = `You would lose an arm for approximately ${currentValue.toLocaleString()} pesos.`;
 		} else {
 			askNextQuestion();
